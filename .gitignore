@@ -1,0 +1,11 @@
+# Java
+/backend/target/
+*.log
+
+# Angular
+/frontend/node_modules/
+dist/
+
+# IDEs
+.idea/
+.vscode/
