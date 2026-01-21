@@ -1,0 +1,87 @@
+<div class="register-container">
+  <h2>Registrar</h2>
+
+  <form (ngSubmit)="register()" #registerForm="ngForm" name="registerForm">
+
+    <div class="input-group">
+      <label for="name">Nome</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="name"
+        #nameCtrl="ngModel"
+        required
+        minlength="2"
+        placeholder="Seu nome">
+    </div>
+
+    <div class="error" *ngIf="nameCtrl.invalid && nameCtrl.touched">
+      <span *ngIf="nameCtrl.errors?.['required']">Nome é obrigatório</span>
+      <span *ngIf="nameCtrl.errors?.['minlength']">Nome deve ter no mínimo 2 caracteres</span>
+    </div>
+
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="email"
+        #emailCtrl="ngModel"
+        required
+        email
+        placeholder="seu@email.com">
+    </div>
+
+    <div class="error" *ngIf="emailCtrl.invalid && emailCtrl.touched">
+      <span *ngIf="emailCtrl.errors?.['required']">Email é obrigatório</span>
+      <span *ngIf="emailCtrl.errors?.['email']">Email inválido</span>
+    </div>
+
+    <div class="input-group">
+      <label for="password">Senha</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="password"
+        #passwordCtrl="ngModel"
+        required
+        pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?&quot;:{}|<>]).{8,}$"
+        placeholder="********">
+    </div>
+
+    <div class="error" *ngIf="passwordCtrl.invalid && passwordCtrl.touched">
+      <span *ngIf="passwordCtrl.errors?.['required']">Senha é obrigatória</span>
+      <span *ngIf="passwordCtrl.errors?.['pattern']">
+        A senha deve ter no mínimo 8 caracteres, 1 letra maiúscula e 1 caractere especial
+      </span>
+    </div>
+
+    <div class="input-group">
+      <label for="confirmPassword">Confirmar Senha</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        [(ngModel)]="confirmPassword"
+        #confirmCtrl="ngModel"
+        required
+        placeholder="********">
+    </div>
+
+    <div class="error" *ngIf="password !== confirmPassword && confirmPassword">
+      <span>As senhas não coincidem</span>
+    </div>
+
+    <button type="submit" [disabled]="registerForm.invalid || password !== confirmPassword">
+      Registrar
+    </button>
+
+  </form>
+
+  <p class="login-link">
+    Já tem conta? <a routerLink="/auth/login">Entrar</a>
+  </p>
+</div>
