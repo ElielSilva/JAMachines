@@ -1,0 +1,60 @@
+<div class="login-container">
+  <h2>Login</h2>
+
+  <form (ngSubmit)="login()" #loginForm="ngForm">
+
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="email"
+        #emailCtrl="ngModel"
+        required
+        email
+        placeholder="seu@email.com">
+    </div>
+
+    <div class="error" *ngIf="emailCtrl.invalid && emailCtrl.touched">
+      <span *ngIf="emailCtrl.errors?.['required']">
+        Email é obrigatório
+      </span>
+      <span *ngIf="emailCtrl.errors?.['email']">
+        Email inválido
+      </span>
+    </div>
+
+    <div class="input-group">
+      <label for="password">Senha</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="password"
+        #passwordCtrl="ngModel"
+        required
+        pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?&quot;:{}|<>]).{8,}$"
+        placeholder="********">
+    </div>
+
+    <div class="error" *ngIf="passwordCtrl.invalid && passwordCtrl.touched">
+      <span *ngIf="passwordCtrl.errors?.['required']">
+        Senha é obrigatória
+      </span>
+      <span *ngIf="passwordCtrl.errors?.['pattern']">
+        A senha deve ter no mínimo 8 caracteres,
+        1 letra maiúscula e 1 caractere especial
+      </span>
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">
+      Entrar
+    </button>
+
+  </form>
+
+  <p class="register-link">
+    Não tem conta? <a routerLink="/auth/register">Registrar</a>
+  </p>
+</div>
