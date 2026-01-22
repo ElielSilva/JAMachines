@@ -64,7 +64,10 @@ export class MachinesService {
   }
 
   patchStatus(machineId: string, newStatus: string): Observable<Machine> {
-    return this.http.patch<Machine>(`${this.api}/${machineId}/status`, newStatus).pipe(
+    console.log("patch =>", machineId, newStatus);
+    const body = { status: newStatus };
+
+    return this.http.patch<Machine>(`${this.api}/${machineId}/status`, body).pipe(
       tap(updatedMachine => {
         const machines = this.machinesSubject.value;
         const index = machines.findIndex(m => m.id === machineId);
@@ -74,7 +77,7 @@ export class MachinesService {
         }
       })
     );
-  }
+}
 
   deleteMachine(id: string): Observable<void> {
     return this.http.delete<void>(`${this.api}/${id}`)
