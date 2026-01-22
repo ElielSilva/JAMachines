@@ -1,11 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  userName: string = '';
 
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      const user = JSON.parse(userJson);
+      this.userName = user.name || 'Usuário';
+    }
+  }
+
+  logout(): void {
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
 }

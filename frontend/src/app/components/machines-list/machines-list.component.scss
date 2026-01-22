@@ -1,36 +1,189 @@
-.edit-input {
-  width: 100%;
-  padding: 4px 8px;
-  border: 1px solid #007bff;
-  border-radius: 4px;
-  outline: none;
+.machines-list-container {
+  padding: 15px;
 
-  &.small {
-    width: 70px;
+  .header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    h2 {
+      font-size: 1.2rem;
+      color: #333;
+      margin: 0;
+    }
+
+    .btn-create {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #1d4ed8;
+      }
+    }
+  }
+
+  .add-form-container {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    background-color: #eef2ff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+
+    .form-input {
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      flex: 1;
+    }
+
+    .form-input.small {
+      flex: 0 0 100px;
+    }
+
+    .btn-save-form {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+
+    th,
+    td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid #eee;
+      vertical-align: middle;
+    }
+
+    th {
+      background-color: #f8f8f8;
+      font-weight: 600;
+      color: #555;
+    }
+
+    tbody tr:hover {
+      background-color: #f9f9f9;
+    }
   }
 }
 
-.actions {
-  display: flex;
-  gap: 8px;
+.edit-input {
+  width: 100%;
+  padding: 2px 6px;
+  border: 1px solid #007bff;
+  border-radius: 3px;
+  outline: none;
+  font-size: 0.85rem;
 
-  button {
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    border: 1px solid #ccc;
+  &.small {
+    width: 60px;
   }
-
-  .btn-save { background: #28a745; color: white; border: none; }
-  .btn-cancel { background: #6c757d; color: white; border: none; }
-  .btn-delete { color: #dc3545; border-color: #f5c6cb; }
 }
 
 .status-badge {
-  padding: 3px 10px;
-  border-radius: 20px;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+
+  &.start {
+    background: #e6ffed;
+    color: #28a745;
+  }
+
+  &.stop {
+    background: #ffeef0;
+    color: #dc3545;
+  }
+
+  &.suspend {
+    background: #fffbe6;
+    color: #ffbf00;
+  }
+}
+
+.actions-cell,
+.operation-cell {
+  white-space: nowrap;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0 4px;
+
+  &.delete {
+    color: #dc3545;
+  }
+}
+
+.op-btn {
+  background: none;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 4px;
   font-size: 0.8rem;
-  font-weight: bold;
-  &.start { background: #d4edda; color: #155724; }
-  &.stop { background: #f8d7da; color: #721c24; }
+  margin-right: 4px;
+
+  &.start {
+    color: #28a745;
+    border-color: #28a745;
+  }
+
+  &.stop {
+    color: #dc3545;
+    border-color: #dc3545;
+  }
+
+  &.suspend {
+    color: #ffbf00;
+    border-color: #ffbf00;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.btn-save {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.btn-cancel {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
 }

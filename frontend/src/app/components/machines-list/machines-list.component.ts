@@ -15,6 +15,13 @@ import { Observable } from 'rxjs';
 export class MachinesComponent implements OnInit {
   
   editState: { [key: string]: boolean } = {};
+  isAddingNew = false;
+  newMachine: any = {
+    name: '',
+    cpu: null,
+    memory: null,
+    disk: null
+  };
 
   constructor(private machinesService: MachinesService) {}
 
@@ -24,6 +31,31 @@ export class MachinesComponent implements OnInit {
 
   get machines$(): Observable<Machine[]> {
     return this.machinesService.machines$;
+  }
+
+  toggleAddState(): void {
+    this.isAddingNew = !this.isAddingNew;
+    if (!this.isAddingNew) {
+      this.newMachine = { name: '', cpu: null, memory: null, disk: null };
+    }
+  }
+
+  onSaveNewMachine(): void {
+    if (!this.newMachine.name || !this.newMachine.cpu || !this.newMachine.memory || !this.newMachine.disk) {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    console.log(this.newMachine)
+    this.machinesService.createMachine(this.newMachine).subscribe({
+      next: () => {
+        this.toggleAddState();
+      },
+      error: (err) => {
+        console.error('Erro ao criar máquina:', err);
+        alert('Erro ao criar máquina.');
+      }
+    });
   }
 
   toggleEdit(id: string, isEditing: boolean): void {
@@ -54,28 +86,6 @@ export class MachinesComponent implements OnInit {
       next: () => console.log(`Status alterado para ${status}`),
       error: (err) => alert('Erro ao alterar status da máquina.')
     });
-  }
-
-  openCreateModal(): void {
-    const name = prompt('Nome da Máquina:');
-    if (name) {
-      const newMachine: Omit<Machine, 'id' | 'createdAt'> = {
-        name,
-        cpu: 1,
-        memory: 4,
-        disk: 20,
-        machineStatus: 'stop'
-      };
-      this.machinesService.createMachine(newMachine as any).subscribe();
-    }
-  }
-
-  openEditModal(machine: Machine): void {
-    const newName = prompt('Novo nome da máquina:', machine.name);
-    if (newName && newName !== machine.name) {
-      const updatedMachine = { ...machine, name: newName };
-      this.machinesService.updateMachine(updatedMachine).subscribe();
-    }
   }
 
   setStatus(id: string, status: string): void {

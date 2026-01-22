@@ -1,15 +1,27 @@
 <div class="machines-list-container">
   <div class="header-actions">
     <h2>Painel de Controle de Máquinas</h2>
-    <button class="btn-create" (click)="openCreateModal()">+ Nova Máquina</button>
+    <button class="btn-create" (click)="toggleAddState()">
+      {{ isAddingNew ? 'Esconder Formulário' : '+ Nova Máquina' }}
+    </button>
+  </div>
+
+  
+  <div *ngIf="isAddingNew" class="add-form-container">
+    <input [(ngModel)]="newMachine.name" placeholder="Nome" class="form-input">
+    <input type="number" min="1" [(ngModel)]="newMachine.cpu" placeholder="CPU (%)" class="form-input small">
+    <input type="number" min="512" [(ngModel)]="newMachine.memory" placeholder="Memória (MB)" class="form-input small">
+    <input type="number" min="1" [(ngModel)]="newMachine.disk" placeholder="Disco (GB)" class="form-input small">
+    
+    <button (click)="onSaveNewMachine()" class="btn-save-form">Incluir</button>
   </div>
 
   <table *ngIf="machines$ | async as machines">
     <thead>
       <tr>
         <th>Nome</th>
-        <th>CPU (%)</th>
-        <th>Memória (GB)</th>
+        <th>CPU</th>
+        <th>Memória (Mb)</th>
         <th>Disco (GB)</th>
         <th>Status Atual</th>
         <th>Hardware</th> <!-- Coluna para Editar/Excluir -->
@@ -27,11 +39,11 @@
         <!-- Recursos (Editáveis) -->
         <td>
           <input *ngIf="editState[machine.id]" type="number" min="1" [(ngModel)]="machine.cpu" [name]="'c-'+machine.id" class="edit-input small">
-          <span *ngIf="!editState[machine.id]">{{ machine.cpu }}%</span>
+          <span *ngIf="!editState[machine.id]">{{ machine.cpu }}</span>
         </td>
         <td>
           <input *ngIf="editState[machine.id]" type="number" min="1" [(ngModel)]="machine.memory" [name]="'m-'+machine.id" class="edit-input small">
-          <span *ngIf="!editState[machine.id]">{{ machine.memory }} GB</span>
+          <span *ngIf="!editState[machine.id]">{{ machine.memory }} MB</span>
         </td>
         <td>
           <input *ngIf="editState[machine.id]" type="number" min="1" [(ngModel)]="machine.disk" [name]="'d-'+machine.id" class="edit-input small">
