@@ -25,4 +25,8 @@ export class AuthService {
   setToken(token: string) {
     sessionStorage.setItem('authToken', token);
   }
+
+  isLoggedIn(): boolean {
+    return !!sessionStorage.getItem('authToken');
+  }
 }

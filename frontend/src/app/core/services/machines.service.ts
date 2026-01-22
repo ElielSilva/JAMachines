@@ -1,0 +1,85 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+export interface Machine {
+  id: string,
+  name: string,
+  cpu: Number,
+  memory: Number,
+  disk: Number,
+  machineStatus: string,
+  createdAt: string
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MachinesService {
+
+  // private api = 'http://localhost:8080/machine';
+
+  // private machinesSubject = new BehaviorSubject<Machine[]>([]);
+  // public machines$ = this.machinesSubject.asObservable();
+
+  private api = 'http://localhost:8080/machine';
+  private machinesSubject = new BehaviorSubject<Machine[]>([]);
+  public machines$ = this.machinesSubject.asObservable();
+
+  constructor(private http: HttpClient) {}
+
+  // fetchMachines(): void {
+  //   this.http.get<Machine[]>(`${this.api}/all`)
+  //     .subscribe({
+  //       next: machines => this.machinesSubject.next(machines),
+  //       error: err => console.error('Erro ao buscar máquinas', err)
+  //     });
+  // }
+
+  getAllMachine(): void {
+    this.http.get<Machine[]>(`${this.api}`).subscribe({
+      next: machines => this.machinesSubject.next(machines),
+      error: err => console.error('Erro ao buscar máquinas', err)
+    });
+  }
+
+  getMachineById(id: number): Observable<Machine> {
+    return this.http.get<Machine>(`${this.api}/${id}`);
+  }
+
+  updateMachine(machine: Machine): Observable<Machine> {
+    return this.http.put<Machine>(`${this.api}/${machine.id}`, machine)
+      .pipe(
+        tap(updated => {
+          // Atualiza localmente o BehaviorSubject
+          const current = this.machinesSubject.value;
+          const index = current.findIndex(m => m.id === updated.id);
+          if (index !== -1) {
+            current[index] = updated;
+            this.machinesSubject.next([...current]);
+          }
+        })
+      );
+  }
+
+  deleteMachine(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.api}/${id}`)
+      .pipe(
+        tap(() => {
+          // Remove do BehaviorSubject local
+          const current = this.machinesSubject.value.filter(m => m.id !== id);
+          this.machinesSubject.next(current);
+        })
+      );
+  }
+
+  createMachine(machine: Omit<Machine, 'id'>): Observable<Machine> {
+    return this.http.post<Machine>(this.api, machine)
+      .pipe(
+        tap(created => {
+          this.machinesSubject.next([...this.machinesSubject.value, created]);
+        })
+      );
+  }
+}

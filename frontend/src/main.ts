@@ -1,20 +1,17 @@
-// import { bootstrapApplication } from '@angular/platform-browser';
-// import { appConfig } from './app/app.config';
-// import { AppComponent } from './app/app.component';
-
-// bootstrapApplication(AppComponent, appConfig)
-//   .catch((err) => console.error(err));
 
 import { bootstrapApplication } from '@angular/platform-browser';
-import { AppComponent } from './app/app.component';
-import { provideHttpClient } from '@angular/common/http';
+
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
+import { provideCharts } from 'ng2-charts';
 import { routes } from './app/app.routes';
+import { AppComponent } from './app/app.component';
+import { tokenInterceptor } from './app/core/interceptors/token.interceptor';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(),   // ✅ garante que HttpClient funcione
-    provideRouter(routes)  // se você estiver usando roteamento
+    provideHttpClient(withInterceptors([tokenInterceptor])),
+    provideRouter(routes),
+    provideCharts() //
   ]
-})
-.catch(err => console.error(err));
+}).catch(err => console.error(err));
