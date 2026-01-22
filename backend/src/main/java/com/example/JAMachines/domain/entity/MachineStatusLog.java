@@ -20,16 +20,23 @@ public class MachineStatusLog {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
-    private UUID machineId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "machine_id", nullable = false)
+    private Machine machine;
 
-    @Column(nullable = false)
-    private UUID userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private MachineStatus status;
 
-    @Column(nullable = false)
+    @Column(name = "changed_at", nullable = false)
     private LocalDateTime changedAt;
+
+    @PrePersist
+    protected void onUpdate() {
+        this.changedAt = LocalDateTime.now();
+    }
 }

@@ -1,0 +1,36 @@
+.edit-input {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  outline: none;
+
+  &.small {
+    width: 70px;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+
+  button {
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+  }
+
+  .btn-save { background: #28a745; color: white; border: none; }
+  .btn-cancel { background: #6c757d; color: white; border: none; }
+  .btn-delete { color: #dc3545; border-color: #f5c6cb; }
+}
+
+.status-badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  &.start { background: #d4edda; color: #155724; }
+  &.stop { background: #f8d7da; color: #721c24; }
+}

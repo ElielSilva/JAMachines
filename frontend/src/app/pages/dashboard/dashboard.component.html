@@ -1,0 +1,26 @@
+<!-- <app-header />
+
+<section class="dashboard">
+  <app-machines-quantity />
+  <app-machines-status />
+  <app-machines />
+</section> -->
+
+<app-header />
+
+<section class="dashboard">
+  <!-- Container para os dois gráficos -->
+  <div class="charts-container">
+    <div class="chart-item">
+      <app-machines-quantity />
+    </div>
+    <div class="chart-item">
+      <app-machines-status />
+    </div>
+  </div>
+
+  <!-- Lista de máquinas abaixo -->
+  <div class="list-container">
+    <app-machines />
+  </div>
+</section>

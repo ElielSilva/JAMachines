@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +25,9 @@ export class LoginComponent {
       next: (res) => {
         console.log("ok")
         this.auth.setToken(res.token);
+        console.log("ok 1")
         this.router.navigate(['/dashboard']);
+        console.log("ok 2")
 
       },
       error: () => alert('Email ou senha incorretos!')

@@ -1,0 +1,10 @@
+<div class="machines-quantity">
+  <h3>Quantidade de Máquinas</h3>
+  <div *ngIf="pieChartData">
+    <canvas baseChart
+      [data]="pieChartData"
+      [options]="pieChartOptions"
+      [type]="pieChartType">
+    </canvas>
+  </div>
+</div>
