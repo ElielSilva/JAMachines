@@ -2,6 +2,7 @@ package com.example.JAMachines.features.machine.query;
 
 import com.example.JAMachines.application.common.exceptions.ResourceNotFoundException;
 import com.example.JAMachines.domain.entity.Machine;
+import com.example.JAMachines.features.machine.MachineResponseDTO;
 import com.example.JAMachines.infrestructure.persistence.MachineRepository;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +17,11 @@ public class MachineQueryHandler {
         this.machineRepository = machineRepository;
     }
 
-    public List<Machine> getAll() {
-        return machineRepository.findAll();
+    public List<MachineResponseDTO> getAll() {
+        return machineRepository.findAll()
+                .stream()
+                .map(MachineResponseDTO::from)
+                .toList();
     }
 
     public Machine getById(UUID id) {

@@ -6,9 +6,9 @@ import { tap } from 'rxjs/operators';
 export interface Machine {
   id: string,
   name: string,
-  cpu: Number,
-  memory: Number,
-  disk: Number,
+  cpu: number,
+  memory: number,
+  disk: number,
   machineStatus: string,
   createdAt: string
 }
@@ -63,11 +63,23 @@ export class MachinesService {
       );
   }
 
+  patchStatus(machineId: string, newStatus: string): Observable<Machine> {
+    return this.http.patch<Machine>(`${this.api}/${machineId}/status`, newStatus).pipe(
+      tap(updatedMachine => {
+        const machines = this.machinesSubject.value;
+        const index = machines.findIndex(m => m.id === machineId);
+        if (index !== -1) {
+          machines[index] = updatedMachine;
+          this.machinesSubject.next([...machines]);
+        }
+      })
+    );
+  }
+
   deleteMachine(id: string): Observable<void> {
     return this.http.delete<void>(`${this.api}/${id}`)
       .pipe(
         tap(() => {
-          // Remove do BehaviorSubject local
           const current = this.machinesSubject.value.filter(m => m.id !== id);
           this.machinesSubject.next(current);
         })

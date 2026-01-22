@@ -1,32 +1,77 @@
 <div class="machines-list-container">
-  <h2>Lista de Máquinas</h2>
+  <div class="header-actions">
+    <h2>Painel de Controle de Máquinas</h2>
+    <button class="btn-create" (click)="openCreateModal()">+ Nova Máquina</button>
+  </div>
 
-  <table *ngIf="machines$ | async as machines; else loading" border="1">
+  <table *ngIf="machines$ | async as machines">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Nome</th>
-        <th>CPU</th>
-        <th>Memória</th>
-        <th>Disco</th>
-        <th>Status</th>
-        <th>Criado em</th>
+        <th>CPU (%)</th>
+        <th>Memória (GB)</th>
+        <th>Disco (GB)</th>
+        <th>Status Atual</th>
+        <th>Hardware</th> <!-- Coluna para Editar/Excluir -->
+        <th>Operação</th> <!-- Coluna para Start/Stop/Suspend -->
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let machine of machines">
-        <td>{{ machine.id }}</td>
-        <td>{{ machine.name }}</td>
-        <td>{{ machine.cpu }}</td>
-        <td>{{ machine.memory }}</td>
-        <td>{{ machine.disk }}</td>
-        <td>{{ machine.machineStatus }}</td>
-        <td>{{ machine.createdAt | date:'short' }}</td>
+        <!-- Nome -->
+        <td>
+          <input *ngIf="editState[machine.id]" [(ngModel)]="machine.name" [name]="'n-'+machine.id" class="edit-input">
+          <span *ngIf="!editState[machine.id]">{{ machine.name }}</span>
+        </td>
+
+        <!-- Recursos (Editáveis) -->
+        <td>
+          <input *ngIf="editState[machine.id]" type="number" min="1" [(ngModel)]="machine.cpu" [name]="'c-'+machine.id" class="edit-input small">
+          <span *ngIf="!editState[machine.id]">{{ machine.cpu }}%</span>
+        </td>
+        <td>
+          <input *ngIf="editState[machine.id]" type="number" min="1" [(ngModel)]="machine.memory" [name]="'m-'+machine.id" class="edit-input small">
+          <span *ngIf="!editState[machine.id]">{{ machine.memory }} GB</span>
+        </td>
+        <td>
+          <input *ngIf="editState[machine.id]" type="number" min="1" [(ngModel)]="machine.disk" [name]="'d-'+machine.id" class="edit-input small">
+          <span *ngIf="!editState[machine.id]">{{ machine.disk }} GB</span>
+        </td>
+
+        <!-- Status -->
+        <td>
+          <span class="status-badge" [ngClass]="machine.machineStatus.toLowerCase()">
+            {{ machine.machineStatus }}
+          </span>
+        </td>
+
+        <!-- Coluna: Hardware -->
+        <td class="actions-cell">
+          <ng-container *ngIf="!editState[machine.id]">
+            <button (click)="toggleEdit(machine.id, true)" class="btn-icon">✏️</button>
+            <button (click)="onDelete(machine.id)" class="btn-icon delete">🗑️</button>
+          </ng-container>
+          <ng-container *ngIf="editState[machine.id]">
+            <button (click)="onSave(machine)" class="btn-save">Salvar</button>
+            <button (click)="toggleEdit(machine.id, false)" class="btn-cancel">X</button>
+          </ng-container>
+        </td>
+
+        <!-- Coluna: Operação (Ações de Status) -->
+        <td class="operation-cell">
+          <button (click)="onStatusChange(machine.id, 'START')" 
+                  [disabled]="machine.machineStatus === 'START' || editState[machine.id]"
+                  class="op-btn start" title="Iniciar">▶</button>
+          
+          <button (click)="onStatusChange(machine.id, 'STOP')" 
+                  [disabled]="machine.machineStatus === 'STOP' || editState[machine.id]"
+                  class="op-btn stop" title="Parar">■</button>
+          
+          <button (click)="onStatusChange(machine.id, 'SUSPEND')" 
+                  [disabled]="machine.machineStatus === 'SUSPEND' || editState[machine.id]"
+                  class="op-btn suspend" title="Suspender">⏸</button>
+        </td>
       </tr>
     </tbody>
   </table>
-
-  <ng-template #loading>
-    <p>Carregando máquinas...</p>
-  </ng-template>
 </div>

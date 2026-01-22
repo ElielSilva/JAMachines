@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,22 +20,30 @@ public class Machine {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "cpu", nullable = false)
     private int cpu;
-
-    @Column(name = "memory", nullable = false)
     private int memory;
-
-    @Column(name = "disk", nullable = false)
     private int disk;
 
-    @Column(name = "STATUS", nullable = false)
+    @Enumerated(EnumType.STRING) // Importante para salvar o texto do Enum no banco
+    @Column(name = "status", nullable = false)
     private MachineStatus machineStatus;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "machine", cascade = CascadeType.ALL)
+    private List<MachineStatusLog> logs;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }
 

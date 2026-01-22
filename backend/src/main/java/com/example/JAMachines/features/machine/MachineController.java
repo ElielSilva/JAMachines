@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,8 +24,8 @@ public class MachineController {
         this.machineCommandHandler = machineCommandHandler;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Machine>> getAll() {
+    @GetMapping()
+    public ResponseEntity<List<MachineResponseDTO>> getAll() {
         return ResponseEntity.ok(machineQueryHandler.getAll());
     }
 
@@ -34,29 +35,30 @@ public class MachineController {
     }
 
     @PostMapping
-    public ResponseEntity<Machine> create(
-            @RequestBody @Valid CreateMachineCommand command
+    public ResponseEntity<MachineResponseDTO> create(
+            @RequestBody @Valid CreateMachineCommand command,
+            Principal principal
     ) {
-        Machine machine = machineCommandHandler.create(command);
+        MachineResponseDTO machine = machineCommandHandler.create(command, principal);
         return ResponseEntity.status(HttpStatus.CREATED).body(machine);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Machine> update(
+    public ResponseEntity<MachineResponseDTO> update(
             @PathVariable UUID id,
             @RequestBody @Valid UpdateMachineCommand command
     ) {
-        Machine machine = machineCommandHandler.update(id, command);
+        MachineResponseDTO machine = machineCommandHandler.update(id, command);
         return ResponseEntity.ok(machine);
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<Machine> updateStatus(
+    public ResponseEntity<MachineResponseDTO> updateStatus(
             @PathVariable UUID id,
             @Valid @RequestBody UpdateMachineStatusCommand command,
-            @RequestHeader("X-User-Id") UUID userId
+            Principal principal
     ) {
-        Machine updatedMachine = machineCommandHandler.updateStatus(id, command.status(), userId);
+        MachineResponseDTO updatedMachine = machineCommandHandler.updateStatus(id, command.status(), principal.getName());
         return ResponseEntity.ok(updatedMachine);
     }
 
