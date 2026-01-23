@@ -30,14 +30,20 @@ public class MachineController {
 
     @Operation(security = { @SecurityRequirement(name = "bearerAuth") })
     @GetMapping()
-    public ResponseEntity<List<MachineResponseDTO>> getAll() {
-        return ResponseEntity.ok(machineQueryHandler.getAll());
+    public ResponseEntity<List<MachineResponseDTO>> getAll(Principal principal) {
+        return ResponseEntity.ok(machineQueryHandler.getAll(principal));
     }
 
     @Operation(security = { @SecurityRequirement(name = "bearerAuth") })
     @GetMapping("/id/{machineId}")
     public ResponseEntity<Machine> get(@PathVariable UUID id) {
         return ResponseEntity.ok(machineQueryHandler.getById(id));
+    }
+
+    @Operation(security = { @SecurityRequirement(name = "bearerAuth") })
+    @GetMapping("/log")
+    public ResponseEntity<List<MachineStatusLogResponseDTO>> getLogs(Principal principal) {
+        return ResponseEntity.ok(machineQueryHandler.getAllLogs(principal));
     }
 
     @Operation(security = { @SecurityRequirement(name = "bearerAuth") })
