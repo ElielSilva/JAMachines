@@ -1,5 +1,6 @@
 package com.example.JAMachines.features.machine.command;
 
+import com.example.JAMachines.application.common.exceptions.BusinessRuleException;
 import com.example.JAMachines.application.common.exceptions.ResourceNotFoundException;
 import com.example.JAMachines.domain.entity.Machine;
 import com.example.JAMachines.domain.entity.MachineStatus;
@@ -39,7 +40,10 @@ public class MachineCommandHandler {
         log.info("info - create machine {} {}", command.name(), command.cpu());
         User user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
+        long machineCount = machineRepository.countByUser(user);
+        if (machineCount >= 5) {
+            throw new BusinessRuleException("Limit reached: Each user can have a maximum of 5 machines.");
+        }
         Machine machine = Machine.builder()
                 .name(command.name())
                 .cpu(command.cpu())

@@ -16,7 +16,7 @@ public record CreateMachineCommand(
         Integer cpu,
 
         @NotNull(message = "Memory is required.")
-        @Min(value = 512, message = "Memory must be at least 1 GB.")
+        @Min(value = 1, message = "Memory must be at least 1 GB.")
         Integer memory,
 
         @NotNull(message = "Disk is required.")
