@@ -1,12 +1,22 @@
-# 🚀 JAMachines - Sistema de Gestão de Máquinas
+# JAMachines - Sistema de Gestão de Máquinas 🚀
 
-Sistema fullstack desenvolvido para o monitoramento e controle de máquinas virtuais. A plataforma permite a gestão de inventário, controle de status operacional em tempo real e auditoria completa via logs de sistema.
----
+Um sistema fullstack moderno desenvolvido para o monitoramento e controle de máquinas virtuais. A plataforma oferece gestão de inventário, controle de status operacional em tempo real e auditoria completa via logs de sistema.
 
 ## 🎨 Interface (Dark Theme)
 O sistema conta com uma interface moderna em modo escuro, utilizando **Angular 19** com rotas dinâmicas e componentes standalone para máxima performance.
 
----
+## 📋 Visão Geral
+
+JAMachines é uma solução empresarial para:
+- ✅ Gerenciamento centralizado de máquinas virtuais
+- ✅ Monitoramento em tempo real de status operacional
+- ✅ Auditoria completa e rastreabilidade de operações
+- ✅ Gestão de inventário integrada
+- ✅ Dashboard intuitivo e responsivo
+
+## 🏗️ Arquitetura
+
+### Stack Tecnológico
 
 ## 🛠️ Tecnologias e Arquitetura
 
@@ -134,15 +144,120 @@ Certifique-se de estar utilizando o Node.js 20 (LTS) via nvm:
 
 Acesse o sistema através do navegador em: http://localhost:4200
 
-## 🔒 Endpoints Principais (API)
+## 📡 API Endpoints
 
+A API segue padrões RESTful com autenticação via JWT Bearer Token. Todos os endpoints de máquinas requerem autenticação.
+
+### 🔐 Autenticação
 
 | Método | Endpoint | Descrição |
+|:---:|:---:|---|
+| `POST` | `/auth/register` | Registra novo usuário na plataforma |
+| `POST` | `/auth/login` | Autentica usuário e retorna JWT Token |
 
-| :--- | :--- | :--- |
+#### Exemplo: Login
+**Request:**
+```json
+{
+  "email": "user@example.com",
+  "password": "Password123@"
+}
+```
 
-| `POST` | `/api/auth/login` | Autenticação e geração de token. |
-| `GET` | `/api/machines` | Lista máquinas filtradas pelo usuário autenticado. |
-| `POST` | `/api/machines` | Cadastra nova máquina vinculada ao Principal. |
-| `PATCH` | `/api/machines/{id}/status` | Altera status e gera log de auditoria. |
-| `GET` | `/api/logs` | Retorna o histórico completo de auditoria. |
+**Response (200 OK):**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+**⚙️ Gerenciamento de Máquinas**
+⚠️ Todos os endpoints abaixo requerem o header: Authorization: Bearer {token}
+
+Método	Endpoint	Descrição
+GET	/machine	Lista todas as máquinas do usuário autenticado
+GET	/machine/id/{machineId}	Obtém detalhes de uma máquina específica
+POST	/machine	Cria nova máquina vinculada ao usuário
+PUT	/machine/{id}	Atualiza dados da máquina
+PATCH	/machine/{id}/status	Altera status e gera log de auditoria
+DELETE	/machine/{id}	Remove máquina do sistema
+
+#### Exemplo: Criar Máquina
+
+**Request:**
+
+```json
+{
+  "name": "VM Production Server",
+  "cpu": 8,
+  "memory": 16384,
+  "disk": 500
+}
+```
+
+**Response (201 CREATED):**
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "VM Production Server",
+  "cpu": 8,
+  "memory": 16384,
+  "disk": 500,
+  "machineStatus": "STOP",
+  "createdAt": "2026-01-23T10:30:00"
+}
+```
+
+### Exemplo: Alterar Status
+**Request:**
+```json
+{
+  "status": "START"
+}
+```
+
+**Response (200 OK):**
+
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "VM Production Server",
+  "cpu": 8,
+  "memory": 16384,
+  "disk": 500,
+  "machineStatus": "START",
+  "createdAt": "2026-01-23T10:30:00"
+}
+```
+
+### 📋 Logs de Auditoria
+| Método | Endpoint | Descrição |
+|GET	| /machine/log |	Retorna histórico completo de alterações de status|
+
+**Response Exemplo (200 OK):**
+
+```json
+[
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440001",
+    "userName": "admin",
+    "machineName": "VM Production Server",
+    "dateTime": "2026-01-23T10:35:00",
+    "status": "STOP"
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440002",
+    "userName": "admin",
+    "machineName": "VM Production Server",
+    "dateTime": "2026-01-23T10:30:00",
+    "status": "SUSPEND"
+  }
+]
+```
+
+
+### 📚 Documentação Swagger
+
+Quando rodando em desenvolvimento, acesse a documentação interativa em:
+
+`http://localhost:8080/swagger-ui.html`
