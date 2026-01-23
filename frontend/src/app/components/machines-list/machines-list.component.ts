@@ -46,7 +46,6 @@ export class MachinesComponent implements OnInit {
       return;
     }
 
-    console.log(this.newMachine)
     this.machinesService.createMachine(this.newMachine).subscribe({
       next: () => {
         this.toggleAddState();

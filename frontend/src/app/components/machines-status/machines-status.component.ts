@@ -26,6 +26,22 @@ export class MachinesStatusComponent implements OnInit {
   public barChartOptions: ChartOptions<'bar'> = {
     indexAxis: 'y',
     responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      x: {
+        max: 5,
+        ticks:{
+          stepSize: 1
+        }
+      },
+      y: {
+        beginAtZero: true
+      }
+      }
   };
 
   constructor(private machinesService: MachinesService) {}

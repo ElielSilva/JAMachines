@@ -12,10 +12,11 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    const userJson = localStorage.getItem('user');
-    if (userJson) {
-      const user = JSON.parse(userJson);
-      this.userName = user.name || 'Usuário';
+    const token = sessionStorage.getItem('authToken') || "";
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    console.log("token ",token)
+    if (payload) {
+      this.userName = payload.name || 'Usuário';
     }
   }
 

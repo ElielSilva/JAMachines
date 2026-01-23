@@ -1,10 +1,10 @@
-version: '3.9'
-
 services:
   postgres:
     image: postgres:15
-    container_name: my-postgres
+    container_name: JAMachines-postgres
     restart: unless-stopped
+    networks:
+      - JAmachinesNet
     environment:
       POSTGRES_USER: jamachines_user
       POSTGRES_PASSWORD: jamachines_pass
@@ -14,5 +14,38 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  api:
+    container_name: 'API'
+    build: ./backend
+    restart:
+      on-failure:3
+    networks:
+      - JAmachinesNet
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/jamachines_db'
+      SPRING_DATASOURCE_USERNAME: 'jamachines_user'
+      SPRING_DATASOURCE_PASSWORD: 'jamachines_pass'
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+
+  frontend:
+    container_name: 'ANGULAR'
+    build: ./frontend
+    restart:
+      on-failure:3
+    networks:
+      - JAmachinesNet
+    ports:
+      - '4000:4000'
+    depends_on:
+      - postgres
+      - api
+
 volumes:
   postgres_data:
+
+networks:
+  JAmachinesNet:
+    driver: bridge
