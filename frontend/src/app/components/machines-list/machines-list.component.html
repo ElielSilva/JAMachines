@@ -10,7 +10,7 @@
   <div *ngIf="isAddingNew" class="add-form-container">
     <input [(ngModel)]="newMachine.name" placeholder="Nome" class="form-input">
     <input type="number" min="1" [(ngModel)]="newMachine.cpu" placeholder="CPU (%)" class="form-input small">
-    <input type="number" min="512" [(ngModel)]="newMachine.memory" placeholder="Memória (MB)" class="form-input small">
+    <input type="number" min="1" [(ngModel)]="newMachine.memory" placeholder="Memória (MB)" class="form-input small">
     <input type="number" min="1" [(ngModel)]="newMachine.disk" placeholder="Disco (GB)" class="form-input small">
     
     <button (click)="onSaveNewMachine()" class="btn-save-form">Incluir</button>

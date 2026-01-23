@@ -16,7 +16,7 @@ public record UpdateMachineCommand(
         Integer cpu,
 
         @NotNull(message = "Memory is required.")
-        @Min(value = 512, message = "Memory must be at least 512 MB.")
+        @Min(value = 1, message = "Memory must be at least 512 MB.")
         Integer memory,
 
         @NotNull(message = "Disk is required.")

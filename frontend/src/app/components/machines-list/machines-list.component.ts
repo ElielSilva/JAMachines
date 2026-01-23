@@ -52,7 +52,12 @@ export class MachinesComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erro ao criar máquina:', err);
-        alert('Erro ao criar máquina.');
+      
+        if (err.status === 400 && err.error && err.error.message) {
+          alert(err.error.message);
+        } else {
+          alert('Erro ao criar máquina. Tente novamente mais tarde.');
+        }
       }
     });
   }
