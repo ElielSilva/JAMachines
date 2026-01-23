@@ -1,1 +1,22 @@
-<p>header works!</p>
+<header class="header">
+  <div class="nav-container">
+    <span class="logo">JAMachines</span>
+    
+    <nav class="navigation">
+      <!-- O routerLinkActive adiciona a classe 'active' automaticamente -->
+      <a routerLink="/dashboard/machines" routerLinkActive="active">
+        Máquinas
+      </a>
+      <a routerLink="/dashboard/logs" routerLinkActive="active">
+        Logs
+      </a>
+    </nav>
+  </div>
+
+  <div class="user-container">
+    <span class="welcome">Olá, <strong>{{ userName }}</strong></span>
+    <button (click)="logout()" class="logout-btn">
+      Sair
+    </button>
+  </div>
+</header>

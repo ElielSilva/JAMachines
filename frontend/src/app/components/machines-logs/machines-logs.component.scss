@@ -1,0 +1,81 @@
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    background-color: #1e1e1e;
+    color: #ffffff;
+
+    thead {
+      tr {
+        background-color: #262626;
+        
+        th {
+          padding: 1rem;
+          color: #94a3b8;
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-weight: 700;
+          border-bottom: 1px solid #333;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid #333;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        td {
+          padding: 1rem;
+          font-size: 0.9rem;
+
+          &.id-cell {
+            color: #64748b;
+            font-family: monospace;
+          }
+
+          &.date-cell {
+            color: #3b82f6;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+.status-badge {
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-block;
+  text-transform: uppercase;
+
+  &[data-status="ONLINE"] {
+    background-color: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  &[data-status="OFFLINE"] {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  &[data-status="MAINTENANCE"] {
+    background-color: rgba(234, 179, 8, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(234, 179, 8, 0.3);
+  }
+}

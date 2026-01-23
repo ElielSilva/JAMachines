@@ -1,0 +1,31 @@
+<div class="table-responsive">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Usuário</th>
+        <th>Máquina</th>
+        <th>Status</th>
+        <th>Modificado em</th> <!-- Nova coluna -->
+      </tr>
+    </thead>
+    <tbody>
+      @for (log of logs; track log.id) {
+        <tr>
+          <td class="id-cell">{{ log.id.substring(0, 8) }}...</td>
+          <td>{{ log.userName }}</td>
+          <td>{{ log.machineName }}</td>
+          <td>
+            <span class="status-badge" [attr.data-status]="log.status">
+              {{ log.status }}
+            </span>
+          </td>
+          <!-- Formatação: Dia/Mês/Ano às Horas:Minutos -->
+          <td class="date-cell">
+            {{ log.dateTime | date: 'dd/MM/yyyy HH:mm' }}
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -11,6 +11,7 @@ import com.example.JAMachines.features.machine.UpdateMachineCommand;
 import com.example.JAMachines.infrestructure.persistence.MachineRepository;
 import com.example.JAMachines.infrestructure.persistence.MachineStatusLogRepository;
 import com.example.JAMachines.infrestructure.persistence.UserRepository; // Adicionado
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Slf4j
 @Component
 public class MachineCommandHandler {
     private final MachineRepository machineRepository;
@@ -34,6 +36,7 @@ public class MachineCommandHandler {
     }
 
     public MachineResponseDTO create(CreateMachineCommand command, Principal principal) {
+        log.info("info - create machine {} {}", command.name(), command.cpu());
         User user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 

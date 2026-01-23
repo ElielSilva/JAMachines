@@ -10,6 +10,7 @@
 
 <section class="dashboard">
   <!-- Container para os dois gráficos -->
+   <!-- alerta - verificar a rederização do grafico -->
   <div class="charts-container">
     <div class="chart-item">
       <app-machines-quantity />
@@ -19,8 +20,7 @@
     </div>
   </div>
 
-  <!-- Lista de máquinas abaixo -->
   <div class="list-container">
-    <app-machines />
+    <router-outlet></router-outlet>
   </div>
 </section>

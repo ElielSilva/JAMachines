@@ -37,11 +37,9 @@ export class MachinesQuantityComponent implements OnInit {
   constructor(private machinesService: MachinesService) {}
 
   ngOnInit(): void {
-    console.log('[DEBUG] Token antes da requisição:', sessionStorage.getItem('authToken'));
     this.machinesService.getAllMachine();
     this.machinesService.machines$.subscribe(machines => {
       this.quantity = machines.length;
-      console.log('machines.length', machines.length)
 
       let color = '#ffffff';
       if (this.quantity >= 1 && this.quantity <= 4) color = 'rgba(0, 255, 0, 0.5)';

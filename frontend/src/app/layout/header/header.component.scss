@@ -1,0 +1,74 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 64px;
+  background-color: #1a1a1a;
+  color: white;
+  border-bottom: 1px solid #333;
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #3b82f6;
+      letter-spacing: -0.5px;
+    }
+
+    .navigation {
+      display: flex;
+      gap: 1.5rem;
+
+      a {
+        color: #94a3b8;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 0.5rem 0;
+        transition: all 0.3s;
+        border-bottom: 2px solid transparent;
+
+        &:hover { color: white; }
+
+        &.active {
+          color: white;
+          border-bottom-color: #3b82f6;
+        }
+      }
+    }
+  }
+
+  .user-container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    .welcome {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      strong { color: white; }
+    }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #ef4444;
+        color: white;
+      }
+    }
+  }
+}
