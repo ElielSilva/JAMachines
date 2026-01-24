@@ -5,6 +5,8 @@ import { ChartData, ChartOptions, ChartType, ChartTypeRegistry } from 'chart.js'
 import { Chart, PieController, ArcElement, Tooltip, Legend } from 'chart.js';
 
 import { BaseChartDirective } from 'ng2-charts';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { Subject } from 'rxjs/internal/Subject';
 
 
 Chart.register(PieController, ArcElement, Tooltip, Legend);
@@ -19,6 +21,7 @@ Chart.register(PieController, ArcElement, Tooltip, Legend);
 export class MachinesQuantityComponent implements OnInit {
 
   quantity = 0;
+  private destroy$ = new Subject<void>();
   
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
     labels: ['Quantidade de Máquinas', 'Restante'],
@@ -37,15 +40,37 @@ export class MachinesQuantityComponent implements OnInit {
 
   ngOnInit(): void {
     this.machinesService.getAllMachine();
-    this.machinesService.machines$.subscribe(machines => {
-      this.quantity = machines.length;
-      
-      let color = '#ffffff';
-      if (this.quantity >= 1 && this.quantity <= 4) color = 'rgba(0, 255, 0, 0.5)';
-      if (this.quantity >= 5) color = 'rgba(255, 0, 0, 0.5)';
 
-      this.pieChartData.datasets[0].data = [Math.min(this.quantity, 5), 5 - Math.min(this.quantity, 5)];
-      this.pieChartData.datasets[0].backgroundColor = [color, '#e0e0e0'];
-    });
+    this.machinesService.machines$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(machines => {
+        this.updateChart(machines.length);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private updateChart(quantity: number) {
+    this.quantity = quantity;
+
+    let color = '#ffffff';
+    if (quantity >= 1 && quantity <= 4) color = 'rgba(0, 255, 0, 0.5)';
+    if (quantity >= 5) color = 'rgba(255, 0, 0, 0, 0.5)';
+
+    const value = Math.min(quantity, 5);
+
+    this.pieChartData = {
+      ...this.pieChartData,
+      datasets: [
+        {
+          ...this.pieChartData.datasets[0],
+          data: [value, 5 - value],
+          backgroundColor: [color, '#e0e0e0']
+        }
+      ]
+    };
   }
 }
