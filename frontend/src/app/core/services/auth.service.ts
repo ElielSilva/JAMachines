@@ -31,7 +31,6 @@ export class AuthService {
       const token = sessionStorage.getItem('authToken') || '';
       if(!token) return false
       const payload = JSON.parse(atob(token.split('.')[1]));
-      console.log("payload ",payload)
       const expirationTime = payload.exp * 1000;
       return Date.now() < expirationTime;
     } catch (e) {

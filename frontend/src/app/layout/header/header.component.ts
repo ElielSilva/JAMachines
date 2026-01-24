@@ -17,7 +17,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     const token = sessionStorage.getItem('authToken') || "";
     const payload = JSON.parse(atob(token.split('.')[1]));
-    console.log("token ",token)
     if (payload) {
       this.userName = payload.name || 'Usuário';
     }
