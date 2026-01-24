@@ -1,32 +1,28 @@
-/* Fundo da página */
 :host {
-  display: block;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea, #764ba2);
   display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e1b4b);
   align-items: center;
   justify-content: center;
   font-family: Arial, sans-serif;
 }
 
-/* Container do formulário */
 .login-container,
 .register-container {
-  background: white;
+  background: #1e293b;
   padding: 32px;
   border-radius: 12px;
   width: 340px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 1px solid #334155;
 }
 
-/* Título */
 h2 {
   text-align: center;
   margin-bottom: 24px;
-  color: #333;
+  color: #f1f5f9;
 }
 
-/* Grupo de input */
 .input-group {
   display: flex;
   flex-direction: column;
@@ -36,63 +32,70 @@ h2 {
 .input-group label {
   margin-bottom: 6px;
   font-weight: bold;
-  color: #555;
+  color: #94a3b8;
 }
 
 .input-group input {
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #334155;
+  background-color: #0f172a;
+  color: #f1f5f9;
   font-size: 14px;
   outline: none;
   transition: 0.2s border-color;
 }
 
-.input-group input:focus {
-  border-color: #667eea;
+.input-group input::placeholder {
+  color: #475569;
 }
 
-/* Mensagens de erro */
+.input-group input:focus {
+  border-color: #818cf8;
+}
+
 .error {
-  color: #e74c3c;
+  color: #fb7185;
   font-size: 12px;
-  margin-top: -10px;
+  margin-top: -5px;
   margin-bottom: 10px;
 }
 
-/* Botão */
 button {
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 6px;
-  background-color: #667eea;
+  background-color: #6366f1;
   color: white;
   font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
   transition: 0.2s background-color;
 }
 
 button:disabled {
-  background-color: #a3bffa;
+  background-color: #312e81;
+  color: #6366f1;
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
 button:hover:not(:disabled) {
-  background-color: #5a67d8;
+  background-color: #4f46e5;
 }
 
-/* Links */
 .register-link,
 .login-link {
   text-align: center;
   margin-top: 16px;
   font-size: 14px;
+  color: #94a3b8;
 }
 
 .register-link a,
 .login-link a {
-  color: #667eea;
+  color: #818cf8;
   text-decoration: none;
   font-weight: bold;
 }
@@ -100,4 +103,5 @@ button:hover:not(:disabled) {
 .register-link a:hover,
 .login-link a:hover {
   text-decoration: underline;
+  color: #a5b4fc;
 }

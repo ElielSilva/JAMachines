@@ -1,68 +1,103 @@
-/* Centraliza o container na tela */
-.login-container {
-  width: 350px;
-  margin: 100px auto;
-  padding: 30px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  background-color: #182c34;
+:host {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e1b4b);
+  align-items: center;
+  justify-content: center;
   font-family: Arial, sans-serif;
 }
 
-/* Título */
-.login-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
+.login-container {
+  background: #1e293b;
+  padding: 32px;
+  border-radius: 12px;
+  width: 340px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 1px solid #334155;
 }
 
-/* Inputs */
+h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #f1f5f9;
+}
+
 .input-group {
-  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 16px;
 }
 
 .input-group label {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   font-weight: bold;
+  color: #94a3b8;
 }
 
 .input-group input {
   padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  background-color: #0f172a;
+  color: #f1f5f9;
   font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  outline: none;
+  transition: 0.2s border-color;
 }
 
-/* Botão */
+.input-group input::placeholder {
+  color: #475569;
+}
+
+.input-group input:focus {
+  border-color: #818cf8;
+}
+
+.error {
+  color: #fb7185;
+  font-size: 12px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
 button {
   width: 100%;
-  padding: 10px;
-  background-color: #3f51b5;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #6366f1;
   color: white;
   font-size: 16px;
-  border: none;
-  border-radius: 4px;
+  font-weight: bold;
   cursor: pointer;
+  transition: 0.2s background-color;
 }
 
 button:disabled {
-  background-color: #999;
+  background-color: #312e81;
+  color: #6366f1;
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
-/* Link de registro */
+button:hover:not(:disabled) {
+  background-color: #4f46e5;
+}
+
 .register-link {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #94a3b8;
 }
 
 .register-link a {
-  color: #3f51b5;
+  color: #818cf8;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .register-link a:hover {
   text-decoration: underline;
+  color: #a5b4fc;
 }

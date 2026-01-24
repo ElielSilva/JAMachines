@@ -9,7 +9,7 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [
     HeaderComponent,
-    MachinesComponent,
+    // MachinesComponent,
     MachinesStatusComponent,
     MachinesQuantityComponent,
     RouterOutlet

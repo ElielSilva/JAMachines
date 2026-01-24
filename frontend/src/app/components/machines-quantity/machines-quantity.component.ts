@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MachinesService } from '../../core/services/machines.service';
-// import { ChartOptions, ChartData, ChartType } from 'chart.js';
 import { ChartData, ChartOptions, ChartType, ChartTypeRegistry } from 'chart.js';
 import { Chart, PieController, ArcElement, Tooltip, Legend } from 'chart.js';
 
@@ -40,7 +39,7 @@ export class MachinesQuantityComponent implements OnInit {
     this.machinesService.getAllMachine();
     this.machinesService.machines$.subscribe(machines => {
       this.quantity = machines.length;
-
+      
       let color = '#ffffff';
       if (this.quantity >= 1 && this.quantity <= 4) color = 'rgba(0, 255, 0, 0.5)';
       if (this.quantity >= 5) color = 'rgba(255, 0, 0, 0.5)';

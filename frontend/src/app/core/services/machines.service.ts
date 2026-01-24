@@ -17,25 +17,11 @@ export interface Machine {
   providedIn: 'root'
 })
 export class MachinesService {
-
-  // private api = 'http://localhost:8080/machine';
-
-  // private machinesSubject = new BehaviorSubject<Machine[]>([]);
-  // public machines$ = this.machinesSubject.asObservable();
-
   private api = 'http://localhost:8080/machine';
   private machinesSubject = new BehaviorSubject<Machine[]>([]);
   public machines$ = this.machinesSubject.asObservable();
 
   constructor(private http: HttpClient) {}
-
-  // fetchMachines(): void {
-  //   this.http.get<Machine[]>(`${this.api}/all`)
-  //     .subscribe({
-  //       next: machines => this.machinesSubject.next(machines),
-  //       error: err => console.error('Erro ao buscar máquinas', err)
-  //     });
-  // }
 
   getAllMachine(): void {
     this.http.get<Machine[]>(`${this.api}`).subscribe({
